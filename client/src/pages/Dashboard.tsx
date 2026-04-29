@@ -1,10 +1,16 @@
 import { useState } from "react";
 import MainLayout from "../components/layouts/MainLayout";
-import { ToastProvider, Button } from "../components/ui/index";
+import { ToastProvider, Button, Image } from "../components/ui/index";
 import { notify } from "../util/notify";
-import { InputField, PasswordInputField, Checkbox, Radio,
-Select, MultiSelect, FileUploadField, TextArea
-} from "../components/ui/forms";
+import { 
+  InputField, PasswordInputField, Checkbox, 
+  Radio, Select, MultiSelect, FileUploadField,
+  TextArea
+} 
+from "../components/ui/forms/index";
+
+// EXAMPLE IMAGE
+import HeroImage from '../assets/hero.png';
 
 const Dashboard = () => {
 
@@ -46,17 +52,20 @@ const Dashboard = () => {
 
   const [roles, setRoles] = useState<string[]>([]);
 
-
-  const handleFileSelect = (SelectedFiles: File[]) => {
-    console.log("Selected files:", SelectedFiles);
+  const handleFileSelect = (selectedFiles: File[]) => {
+    console.log('Selected files:', selectedFiles);
   };
 
-  const [textArea, setTextArea] = useState("");
+  const [textArea, setTextArea] = useState('');
 
   const content = (
     <>
       <div className="space-y-12 pb-20">
-        <h1 className="text-text">Button & Toast Notification Usage Examples</h1>
+        
+        {/* Buttons & Notification */}
+        <h1 className="text-text">
+          Button & Toast Notification Usage Examples
+        </h1>
 
         {/* 🔔 Notification Trigger Example */}
         <div className="flex gap-3">
@@ -116,9 +125,9 @@ const Dashboard = () => {
         <div className="space-y-12 pb-20">
           <h1 className="text-text">Forms</h1>
           <div className="flex flex-col space-x-4 gap-3">
-        
+
             <InputField
-              label="Email"
+              label="Email" 
               name="email"
               type="email"
               placeholder="Enter your email"
@@ -131,9 +140,9 @@ const Dashboard = () => {
               label="Password"
               name="password"
               placeholder="Enter your password"
-              error="Password does not match"
+              error="Password doesn ot match"
             />
-
+            
             <Checkbox
               label="Is Enroll"
               name="status"
@@ -166,42 +175,83 @@ const Dashboard = () => {
               ]}
             />
 
-          <MultiSelect
-            label="Roles"
-            options={[
-              { value: 'admin', label: 'Admin' },
-              { value: 'teacher', label: 'Teacher' },
-            ]}
-            selectedValues={roles}
-            onChange={setRoles}
-            iconName="FaUsers"
-          />
+            <MultiSelect
+              label="Roles"
+              options={[
+                { value: 'admin', label: 'Admin' },
+                { value: 'teacher', label: 'Teacher' },
+              ]}
+              selectedValues={roles}
+              onChange={setRoles}
+              iconName="FaUsers"
+            />
 
-          <FileUploadField
-            label="Avatar"
-            name="files"
-            accept="image/jpg, jpeg,png"
-            onFileSelect={handleFileSelect}
-          />
+            <FileUploadField
+              label="Avatar"
+              name="files"
+              accept="image/jpg,jpeg,png"
+              onFileSelect={handleFileSelect}
+            />
 
-          <FileUploadField
-            label="Images"
-            name="files"
-            maxFiles={2}
-            multiple
-            accept="image/jpg, jpeg, png"
-            onFileSelect={handleFileSelect}
-          />
+            <FileUploadField
+              label="Images"
+              name="files"
+              maxFiles={2}
+              multiple
+              accept="image/jpg,jpeg,png"
+              onFileSelect={handleFileSelect}
+            />
 
-          <TextArea
-            label="Message"
-            value={textArea}
-            onChange={(e) => setTextArea(e.target.value)}
-            showCounter
-            maxLength={200}
-          />
+            <TextArea
+              label="Message"
+              value={textArea}
+              onChange={(e) => setTextArea(e.target.value)}
+              showCounter
+              maxLength={200}
+            />
 
           </div>
+        </div>
+
+        {/*  IMAGE COMPONENT USAGES */}
+        <div className="space-y-4">
+          <h1 className="text-text">Image Component Example Usage</h1>
+          
+          <Image 
+            src={HeroImage} 
+            alt="Hero Image"
+            size="md"
+          />
+
+          <Image 
+            src={HeroImage}
+            customSize="w-40 h-60" 
+          />
+
+          <Image 
+            src={HeroImage} 
+            customSize="w-[180px] h-[250px]" 
+          />
+
+          <Image 
+            src={HeroImage}
+            alt="Hero Image"
+            customSize="w-full"
+            aspectRatio="aspect-[16/9]"
+          />
+
+          <Image 
+            src="/images/user.jpg"
+            size="md"
+            className="rounded-full"
+          />
+
+          <Image 
+            src="/images/user.jpg"
+            size="md"
+            className="rounded-full"
+            fallbackIcon="FaUser"
+          />
 
         </div>
 

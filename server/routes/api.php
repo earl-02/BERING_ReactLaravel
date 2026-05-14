@@ -1,16 +1,21 @@
 <?php
 
+use App\Http\Controllers\API\v1\AuthenticationController;
 use App\Http\Controllers\API\v1\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::post('auth/login', [AuthenticationController::class, 'login']);
 
-Route::apiResource('users', UserController::class);
 
-// The routes now include:
+Route::middleware('auth:sanctum')->group(function () {
 
-// GET /api/users - index (list all users)
-// POST /api/users - store (create user)
-// GET /api/users/{id} - show (get single user)
-// PUT /api/users/{id} - update (update user)
-// DELETE /api/users/{id} - destroy (delete user)
+    // Auth
+    Route::get('user/auth/me', [AuthenticationController::class, 'me']);
+    Route::post('auth/logout', [AuthenticationController::class, 'logout']);
+
+    // Admin Only
+    Route::middleware('role:admin')->group(function () {
+        Route::apiResource('users', UserController::class);
+        Route::post('users/{id}/restore', [UserController::class, 'restore']);
+    });
+});
